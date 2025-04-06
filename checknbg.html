@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prime Check Algorithm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      font-size: 16px;
+      padding: 5px 10px;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Prime Check Algorithm</h2>
+  <label for="nInput">Enter value of n:</label>
+  <input type="number" id="nInput" min="0">
+  <button onclick="runAlgorithm()">Check</button>
+
+  <div id="result"></div>
+
+  <script>
+    function isPrime(num) {
+      if (num <= 1) return false;
+      if (num <= 3) return true;
+      if (num % 2 === 0 || num % 3 === 0) return false;
+      for (let i = 5; i * i <= num; i += 6) {
+        if (num % i === 0 || num % (i + 2) === 0) return false;
+      }
+      return true;
+    }
+
+    function runAlgorithm() {
+      const n = parseInt(document.getElementById("nInput").value);
+      const x = 12 * n + 4;
+      const resultDiv = document.getElementById("result");
+
+      if (isPrime(x - 3)) {
+        resultDiv.innerText = `x = 3 + (${x - 3}) → x = ${x}`;
+        return;
+      }
+
+      for (let j = -1; j < n; j++) {
+        const p = (x + 12 * j + 6) / 2;
+        const q = (x - 12 * j - 6) / 2;
+
+        if (Number.isInteger(p) && Number.isInteger(q) && isPrime(p) && isPrime(q)) {
+          resultDiv.innerText = `x = ${p} + ${q} → x = ${x}`;
+          return;
+        }
+      }
+
+      resultDiv.innerText = "x is not a sum of two odd primes";
+    }
+  </script>
+
+</body>
+</html>
